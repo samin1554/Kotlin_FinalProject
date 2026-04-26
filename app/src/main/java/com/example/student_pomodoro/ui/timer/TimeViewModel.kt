@@ -1,12 +1,22 @@
 package com.example.student_pomodoro.ui.timer
 
+import android.app.Application
 import android.os.Handler
 import android.os.Looper
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.student_pomodoro.StreakManager
+import kotlinx.coroutines.launch
 
-class TimeViewModel : ViewModel() {
+class TimeViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val streakManager = StreakManager(application)
+    
+    val currentStreak: LiveData<Int> = streakManager.currentStreakFlow.asLiveData()
+    val longestStreak: LiveData<Int> = streakManager.longestStreakFlow.asLiveData()
 
     var workDurationMin = 25
     var breakDurationMin = 5
@@ -28,7 +38,6 @@ class TimeViewModel : ViewModel() {
 
     fun startTimer() {
         if (_timeState.value == TimeState.IDLE) {
-            // set start -> initial time
             _timeLeft.value = if (_isWorkingSession.value == true) {
                 workDurationMin * 60L
             } else {
@@ -57,6 +66,11 @@ class TimeViewModel : ViewModel() {
     }
 
     fun resetTimer() {
+        if (_timeState.value != TimeState.IDLE) {
+            viewModelScope.launch {
+                streakManager.resetCurrentStreak()
+            }
+        }
         runnable?.let { handler.removeCallbacks(it) }
         _timeState.value = TimeState.IDLE
         _timeLeft.value = workDurationMin * 60L
@@ -66,11 +80,16 @@ class TimeViewModel : ViewModel() {
         _timeState.value = TimeState.IDLE
 
         if (_isWorkingSession.value == true) {
-            // Work session done - switch to break
+            // Work session done - increment streak
+            viewModelScope.launch {
+                streakManager.incrementStreak()
+            }
+            
             val session = _currentSession.value ?: 1
             if (session >= 4) {
-                // Long break after 4 sessions - reset session
                 _currentSession.value = 1
+            } else {
+                _currentSession.value = session + 1
             }
             _isWorkingSession.value = false
             _timeLeft.value = breakDurationMin * 60L

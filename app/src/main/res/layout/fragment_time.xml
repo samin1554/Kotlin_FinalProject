@@ -6,70 +6,117 @@
     android:background="?android:colorBackground"
     android:padding="24dp">
 
-    <TextView
-        android:id="@+id/session_type_text"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/timer_card"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Focus Time"
-        android:textColor="?colorPrimary"
-        android:textSize="18sp"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/start_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/time_text"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="32dp">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/timer_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:progress="100"
+                app:indicatorSize="260dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:trackCornerRadius="8dp"
+                app:trackThickness="16dp" />
+
+            <TextView
+                android:id="@+id/session_type_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Focus Time"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/time_text"
+                app:layout_constraintEnd_toEndOf="@id/timer_progress"
+                app:layout_constraintStart_toStartOf="@id/timer_progress"
+                app:layout_constraintTop_toTopOf="@id/timer_progress"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="25:00"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="56sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/session_text"
+                app:layout_constraintEnd_toEndOf="@id/timer_progress"
+                app:layout_constraintStart_toStartOf="@id/timer_progress"
+                app:layout_constraintTop_toBottomOf="@id/session_type_text" />
+
+            <TextView
+                android:id="@+id/session_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Session 1 of 4"
+                android:textColor="?attr/colorSecondary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/timer_progress"
+                app:layout_constraintEnd_toEndOf="@id/timer_progress"
+                app:layout_constraintStart_toStartOf="@id/timer_progress"
+                app:layout_constraintTop_toBottomOf="@id/time_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
-        android:id="@+id/time_text"
+        android:id="@+id/streak_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="25:00"
-        android:textColor="?colorPrimary"
-        android:textSize="64sp"
-        android:fontFamily="monospace"
         android:layout_marginTop="16dp"
+        android:text="Longest Streak: 0"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="18sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/session_type_text"
-        app:layout_constraintBottom_toTopOf="@id/session_text" />
+        app:layout_constraintTop_toBottomOf="@id/timer_card" />
 
-    <TextView
-        android:id="@+id/session_text"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/start_button"
+        android:layout_width="220dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="32dp"
+        android:text="Start"
+        android:textSize="20sp"
+        app:cornerRadius="36dp"
+        app:layout_constraintBottom_toTopOf="@id/reset_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/streak_text" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/reset_button"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Session 1 of 4"
-        android:textColor="?colorSecondary"
-        android:textSize="14sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/time_text"
-        app:layout_constraintBottom_toTopOf="@id/start_button" />
-
-    <Button
-        android:id="@+id/start_button"
-        android:layout_width="160dp"
-        android:layout_height="48dp"
-        android:text="Start"
-        android:textColor="?colorOnPrimary"
-        android:backgroundTint="?colorPrimary"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/session_text"
-        app:layout_constraintBottom_toTopOf="@id/reset_button" />
-
-    <Button
-        android:id="@+id/reset_button"
-        android:layout_width="160dp"
-        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
         android:text="Reset"
-        android:textColor="?colorPrimary"
-        android:backgroundTint="@android:color/transparent"
-        android:layout_marginTop="8dp"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/start_button"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/start_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

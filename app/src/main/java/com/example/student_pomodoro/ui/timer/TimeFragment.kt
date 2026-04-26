@@ -48,6 +48,15 @@ class TimeFragment : Fragment() {
             val mins = seconds / 60
             val secs = seconds % 60
             binding.timeText.text = String.format("%02d:%02d", mins, secs)
+            
+            // Update progress indicator
+            val totalSeconds = if (viewModel.isWorkingSession.value == true) {
+                viewModel.workDurationMin * 60L
+            } else {
+                viewModel.breakDurationMin * 60L
+            }
+            val progress = ((seconds.toDouble() / totalSeconds) * 100).toInt()
+            binding.timerProgress.progress = progress
         }
 
         viewModel.timeState.observe(viewLifecycleOwner) { state ->
@@ -63,6 +72,11 @@ class TimeFragment : Fragment() {
 
         viewModel.isWorkingSession.observe(viewLifecycleOwner) { isWork ->
             binding.sessionTypeText.text = if (isWork) "Focus Time" else "Break Time"
+        }
+
+        // Observe streak data
+        viewModel.longestStreak.observe(viewLifecycleOwner) { streak ->
+            binding.streakText.text = "Longest Streak: $streak"
         }
     }
 
