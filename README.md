@@ -30,14 +30,14 @@ Built with **Kotlin**, **Jetpack MVVM**, **Room**, and **DataStore**, it follows
  
 | Feature | Description |
 |---|---|
-| ⏱️ **Pomodoro Timer** | Countdown timer with circular progress indicator |
-| ▶️ **Start / Pause / Reset** | Full timer control with state management |
-| 🔁 **Session Cycling** | Automatically alternates between Focus Time and Break Time across 4 sessions |
-| 🔥 **Streak Tracking** | Tracks current and longest streak of completed Pomodoro sessions |
-| ✅ **Task Manager** | Add, view, delete tasks; each task tracks its Pomodoro count |
-| 💾 **Persistent Tasks** | Tasks saved to Room (SQLite) — survive app restarts |
-| 🎛️ **Settings** | Adjustable work duration (5–60 min) and break duration (1–30 min) via SeekBar |
-| 🎨 **Material Design 3** | Cards, circular progress, themed buttons, light/dark mode support |
+|  **Pomodoro Timer** | Countdown timer with circular progress indicator |
+|  **Start / Pause / Reset** | Full timer control with state management |
+|  **Session Cycling** | Automatically alternates between Focus Time and Break Time across 4 sessions |
+|  **Streak Tracking** | Tracks current and longest streak of completed Pomodoro sessions |
+|  **Task Manager** | Add, view, delete tasks; each task tracks its Pomodoro count |
+|  **Persistent Tasks** | Tasks saved to Room (SQLite) — survive app restarts |
+|  **Settings** | Adjustable work duration (5–60 min) and break duration (1–30 min) via SeekBar |
+|  **Material Design 3** | Cards, circular progress, themed buttons, light/dark mode support |
  
 ---
  
@@ -137,7 +137,7 @@ app/src/main/
    - Android Studio will prompt to sync; click "Sync Now"
 4. **Run the app**
    - Select a device/emulator
-   - Press ▶️ Run (or `Shift + F10`)
+   - Press  Run (or `Shift + F10`)
 No API keys or external services required — the app is fully self-contained.
  
 ---
@@ -204,20 +204,20 @@ fun getAllTasks(): LiveData<List<Task>>
  
 ## Screens
  
-### 🕐 Timer Screen
+###  Timer Screen
 - Circular progress indicator (counts down from 100% → 0%)
 - Large bold countdown (MM:SS)
 - Session label: "Session X of 4" and "Focus Time" / "Break Time"
 - Longest streak display
 - Start/Pause and Reset buttons
-### ✅ Tasks Screen
+###  Tasks Screen
 - Input field + Add button to create new tasks
 - RecyclerView list of task cards, each showing:
   - Task title
   - Number of Pomodoros completed
   - Checkbox (UI only — DB persistence not wired yet)
   - Delete button
-### ⚙️ Settings Screen
+###  Settings Screen
 - Work Duration SeekBar (5–60 minutes)
 - Break Duration SeekBar (1–30 minutes)
 - Live label updates as the user drags
