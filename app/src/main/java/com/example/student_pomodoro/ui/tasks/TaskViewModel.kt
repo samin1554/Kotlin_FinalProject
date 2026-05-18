@@ -28,7 +28,11 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
         repository.delete(task)
     }
 
-    fun incrementPomodoro(taskId: Int) = viewModelScope.launch {
-        repository.incrementPomodoro(taskId)
+    fun setCompleted(taskId: Int, completed: Boolean) = viewModelScope.launch {
+        repository.setCompleted(taskId, completed)
+    }
+
+    fun updateTitle(taskId: Int, newTitle: String) = viewModelScope.launch {
+        repository.updateTitle(taskId, newTitle)
     }
 }

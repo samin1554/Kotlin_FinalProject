@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ink_background">#FFFFFF</color>
-    <color name="ink_surface">#f5f5f5</color>
+    <!-- Warm Pomodoro Palette -->
+    <color name="pomodoro_background">#FFF8F5</color>
+    <color name="pomodoro_surface">#FFF0EB</color>
+    <color name="pomodoro_primary">#E85D4E</color>
+    <color name="pomodoro_primary_variant">#C44536</color>
+    <color name="pomodoro_secondary">#6B9080</color>
+    <color name="pomodoro_secondary_variant">#A4C3B2</color>
+    <color name="pomodoro_tertiary">#D4A373</color>
+    <color name="pomodoro_error">#D62828</color>
+    <color name="pomodoro_on_primary">#FFFFFF</color>
+    <color name="pomodoro_on_surface">#1A1A1A</color>
+    <color name="pomodoro_on_surface_variant">#4A4A4A</color>
+    <color name="pomodoro_outline">#E5E5E5</color>
+
+    <!-- Session type colors -->
+    <color name="focus_tint">#E85D4E</color>
+    <color name="break_tint">#6B9080</color>
+    <color name="long_break_tint">#D4A373</color>
+
+    <!-- Legacy aliases for compatibility -->
+    <color name="ink_background">#FFF8F5</color>
+    <color name="ink_surface">#FFF0EB</color>
     <color name="ink_primary">#1A1A1A</color>
     <color name="ink_secondary">#4A4A4A</color>
     <color name="ink_tertiary">#7A7A7A</color>

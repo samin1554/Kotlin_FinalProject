@@ -4,55 +4,117 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.student_pomodoro.R
+import androidx.lifecycle.lifecycleScope
+import com.example.student_pomodoro.SettingsDataStore
+import com.example.student_pomodoro.databinding.FragmentSettingsBinding
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class SettingsFragment : Fragment() {
-    private var workMin = 25
-    private var breakMin = 5
+
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var settingsDataStore: SettingsDataStore
 
     override fun onCreateView(
-        inflater : LayoutInflater,
-        container : ViewGroup?,
-        savedInstanceState : Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_settings,container, false)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        settingsDataStore = SettingsDataStore(requireContext())
 
-        val workSeekBar: SeekBar = view.findViewById(R.id.work_seek_bar)
-        val workValueText: TextView = view.findViewById(R.id.work_value_text)
-        val breakSeekBar: SeekBar = view.findViewById(R.id.break_seek_bar)
-        val breakValueText: TextView = view.findViewById(R.id.break_value_text)
+        lifecycleScope.launch {
+            val workDuration = settingsDataStore.workDuration.first()
+            val breakDuration = settingsDataStore.breakDuration.first()
+            val longBreakDuration = settingsDataStore.longBreakDuration.first()
+            val sessionsBeforeLongBreak = settingsDataStore.sessionsBeforeLongBreak.first()
+            val soundEnabled = settingsDataStore.soundEnabled.first()
+            val vibrationEnabled = settingsDataStore.vibrationEnabled.first()
+            val autoStart = settingsDataStore.autoStartEnabled.first()
+            val dailyGoal = settingsDataStore.dailyGoal.first()
 
+            binding.workSeekBar.value = workDuration.toFloat()
+            binding.workValueText.text = "$workDuration min"
 
-        workSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                workMin = progress.coerceIn(5, 60)
-                workValueText.text = "$workMin min"
+            binding.breakSeekBar.value = breakDuration.toFloat()
+            binding.breakValueText.text = "$breakDuration min"
 
+            binding.longBreakSeekBar.value = longBreakDuration.toFloat()
+            binding.longBreakValueText.text = "$longBreakDuration min"
+
+            binding.sessionsSeekBar.value = sessionsBeforeLongBreak.toFloat()
+            binding.sessionsValueText.text = "$sessionsBeforeLongBreak"
+
+            binding.soundSwitch.isChecked = soundEnabled
+            binding.vibrationSwitch.isChecked = vibrationEnabled
+            binding.autoStartSwitch.isChecked = autoStart
+            binding.dailyGoalSeekBar.value = dailyGoal.toFloat()
+            binding.dailyGoalValueText.text = "$dailyGoal"
+        }
+
+        binding.workSeekBar.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) {
+                val min = value.toInt().coerceIn(1, 60)
+                binding.workValueText.text = "$min min"
+                lifecycleScope.launch { settingsDataStore.setWorkDuration(min) }
             }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        }
 
-
-        })
-
-        breakSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                breakMin = progress.coerceIn(1, 30)
-                breakValueText.text = "$breakMin min"
-
+        binding.breakSeekBar.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) {
+                val min = value.toInt().coerceIn(1, 30)
+                binding.breakValueText.text = "$min min"
+                lifecycleScope.launch { settingsDataStore.setBreakDuration(min) }
             }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        }
 
-        })
+        binding.longBreakSeekBar.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) {
+                val min = value.toInt().coerceIn(5, 45)
+                binding.longBreakValueText.text = "$min min"
+                lifecycleScope.launch { settingsDataStore.setLongBreakDuration(min) }
+            }
+        }
 
+        binding.sessionsSeekBar.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) {
+                val count = value.toInt().coerceIn(2, 8)
+                binding.sessionsValueText.text = "$count"
+                lifecycleScope.launch { settingsDataStore.setSessionsBeforeLongBreak(count) }
+            }
+        }
 
+        binding.soundSwitch.setOnCheckedChangeListener { _, isChecked ->
+            lifecycleScope.launch { settingsDataStore.setSoundEnabled(isChecked) }
+        }
+
+        binding.vibrationSwitch.setOnCheckedChangeListener { _, isChecked ->
+            lifecycleScope.launch { settingsDataStore.setVibrationEnabled(isChecked) }
+        }
+
+        binding.autoStartSwitch.setOnCheckedChangeListener { _, isChecked ->
+            lifecycleScope.launch { settingsDataStore.setAutoStartEnabled(isChecked) }
+        }
+
+        binding.dailyGoalSeekBar.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) {
+                val goal = value.toInt().coerceIn(1, 20)
+                binding.dailyGoalValueText.text = "$goal"
+                lifecycleScope.launch { settingsDataStore.setDailyGoal(goal) }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

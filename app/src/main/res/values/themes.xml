@@ -1,16 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.Student_Pomodoro" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/ink_primary</item>
-        <item name="colorPrimaryVariant">@color/ink_secondary</item>
-        <item name="colorOnPrimary">@color/ink_white</item>
-        <item name="colorSecondary">@color/ink_secondary</item>
-        <item name="colorSecondaryVariant">@color/ink_tertiary</item>
-        <item name="colorOnSecondary">@color/ink_white</item>
-        <item name="colorTertiary">@color/ink_tertiary</item>
-        <item name="android:colorBackground">@color/ink_background</item>
-        <item name="colorSurface">@color/ink_surface</item>
-        <item name="android:statusBarColor">@color/ink_background</item>
+    <style name="Theme.Student_Pomodoro" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/pomodoro_primary</item>
+        <item name="colorOnPrimary">@color/pomodoro_on_primary</item>
+        <item name="colorPrimaryContainer">@color/pomodoro_surface</item>
+        <item name="colorOnPrimaryContainer">@color/pomodoro_primary_variant</item>
+        <item name="colorSecondary">@color/pomodoro_secondary</item>
+        <item name="colorOnSecondary">@color/pomodoro_on_primary</item>
+        <item name="colorSecondaryContainer">@color/pomodoro_secondary_variant</item>
+        <item name="colorOnSecondaryContainer">@color/pomodoro_on_primary</item>
+        <item name="colorTertiary">@color/pomodoro_tertiary</item>
+        <item name="colorError">@color/pomodoro_error</item>
+        <item name="colorOnError">@color/pomodoro_on_primary</item>
+        <item name="android:colorBackground">@color/pomodoro_background</item>
+        <item name="colorSurface">@color/pomodoro_surface</item>
+        <item name="colorOnSurface">@color/pomodoro_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/pomodoro_on_surface_variant</item>
+        <item name="colorOutline">@color/pomodoro_outline</item>
+        <item name="colorOutlineVariant">@color/pomodoro_outline</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:navigationBarColor">@color/ink_background</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 </resources>

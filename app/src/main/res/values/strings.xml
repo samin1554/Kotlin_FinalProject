@@ -11,7 +11,7 @@
     <string name="timer_restart">Restart</string>
     <string name="timer_skip">Skip</string>
     <string name="session_count">Session %1$d of %2$d</string>
-    <string name="time_format">%02d:%02d</string>
+    <string name="time_format" formatted="false">%02d:%02d</string>
 
     <string name="stats_title">Statistic</string>
     <string name="stats_today">Today</string>

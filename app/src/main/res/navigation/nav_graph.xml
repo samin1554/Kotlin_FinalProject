@@ -14,4 +14,14 @@
         android:name="com.example.student_pomodoro.ui.tasks.TaskFragment"
         android:label="Tasks" />
 
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.example.student_pomodoro.ui.stats.StatsFragment"
+        android:label="Stats" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.student_pomodoro.ui.settings.SettingsFragment"
+        android:label="Settings" />
+
 </navigation>
